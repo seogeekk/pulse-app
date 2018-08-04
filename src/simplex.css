@@ -4140,6 +4140,12 @@ input[type="button"].btn-block {
     list-style: none;
 }
 
+.nav-nolink {
+    display: block;
+    padding: 0.9rem 1rem;
+    text-decoration: none;
+}
+
 .nav-link {
     display: block;
     padding: 0.9rem 1rem;
@@ -4161,7 +4167,7 @@ input[type="button"].btn-block {
     margin-bottom: -1px;
 }
 
-.nav-tabs .nav-link {
+.nav-tabs .nav-link .nav-nolink {
     border: 1px solid transparent;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;

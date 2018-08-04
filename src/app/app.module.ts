@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserXhr } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -12,20 +13,30 @@ import { Routing } from './app.routing';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
 import { AuthGuard } from './_guards/auth.guard';
+import { APIInterceptor } from './_interceptors/backend';
+import { PulseBodyComponent } from './pulse-body/pulse-body.component';
+import {QuestionService} from './_services/question.service';
+// import {CustExtBrowserXhr} from './_interceptors/custbrowserxhr';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    PulseBodyComponent
   ],
   imports: [
-    BrowserModule, Routing, FormsModule, HttpClientModule
+    BrowserModule, Routing, FormsModule, HttpClientModule, ChartsModule
   ],
   providers: [
       {provide: APP_BASE_HREF, useValue : '/' },
+      {provide: HTTP_INTERCEPTORS, useClass: APIInterceptor,
+          multi: true},
+      // {provide: BrowserXhr, useClass: CustExtBrowserXhr},
       AuthGuard,
       AuthenticationService,
+      QuestionService,
       UserService
       ],
   bootstrap: [AppComponent]
