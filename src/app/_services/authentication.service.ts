@@ -8,12 +8,14 @@ export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
     login(username: string, password: string) {
-        return this.http.post<any>('/api/authenticate', { username: username, password: password })
+        console.log('Calling authenticate service');
+        return this.http.post<any>('/authenticate', { userName: username, password: password })
             .map(user => {
                 // login successful if there's a jwt token in the response
-                if (user && user.token) {
+                if (user.success && user.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('token', user.token);
+                    console.log(localStorage.getItem('token'));
                 }
 
                 return user;
@@ -22,6 +24,6 @@ export class AuthenticationService {
 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem('token');
     }
 }

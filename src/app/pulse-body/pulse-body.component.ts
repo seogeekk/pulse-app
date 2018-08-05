@@ -11,6 +11,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class PulseBodyComponent implements OnInit {
 
+    public questions;
+
     public barChartOptions:any = {
         scaleShowVerticalLines: false,
         responsive: true
@@ -48,6 +50,7 @@ export class PulseBodyComponent implements OnInit {
       this.questionservice.getAll()
           .subscribe(
               data => {
+                  this.questions = data;
                 console.log(data);
               }
           );

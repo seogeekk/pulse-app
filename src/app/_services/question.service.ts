@@ -8,18 +8,18 @@ export class QuestionService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<Question[]>('questions');
+        return this.http.get<Question[]>('/questions');
     }
 
     create(question: Question) {
-        return this.http.post('questions', question);
+        return this.http.post('/questions', question);
     }
 
     update(question: Question) {
-        return this.http.put('questions/' + question._id, question);
+        return this.http.put('/questions/' + question._id, question);
     }
 
     delete(id: number) {
-        return this.http.delete('questions/' + id);
+        return this.http.delete('/questions/' + id);
     }
 }

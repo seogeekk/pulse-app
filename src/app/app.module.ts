@@ -18,13 +18,15 @@ import { PulseBodyComponent } from './pulse-body/pulse-body.component';
 import {QuestionService} from './_services/question.service';
 // import {CustExtBrowserXhr} from './_interceptors/custbrowserxhr';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { AskComponent } from './ask/ask.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    PulseBodyComponent
+    PulseBodyComponent,
+    AskComponent
   ],
   imports: [
     BrowserModule, Routing, FormsModule, HttpClientModule, ChartsModule

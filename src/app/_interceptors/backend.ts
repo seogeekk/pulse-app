@@ -6,18 +6,25 @@ import {Observable} from 'rxjs/Observable';
 export class APIInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+
         // change api url
         const urlReq = req.clone(
-            { url: `https://pulseapi.tk/${req.url}` }
+            { url: `https://pulseapi.tk${req.url}` }
             );
         // set headers
-        const apiReq = urlReq.clone(
-            {setHeaders: {
-                    //Authorization: `Bearer ${localStorage.get('token')}`
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }}
-        )
-        return next.handle(apiReq);
+        if (req.url !== '/authenticate') {
+            const apiReq = urlReq.clone(
+                {setHeaders: {
+                        'x-access-token': localStorage.getItem('token'),
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    }}
+            );
+
+            return next.handle(apiReq);
+        }
+
+        return next.handle(urlReq);
+
     }
 }
