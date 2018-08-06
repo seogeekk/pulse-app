@@ -30,7 +30,6 @@
     "moment": "^2.22.2",
     "ng-pick-datetime": "^6.0.12",
     "ng2-charts": "^1.6.0",
-    "ngc-float-button": "^1.2.1",
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.2.2",
     "zone.js": "~0.8.26"

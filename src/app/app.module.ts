@@ -20,7 +20,6 @@ import { PulseBodyComponent } from './pulse-body/pulse-body.component';
 import {QuestionService} from './_services/question.service';
 import {GroupService} from './_services/group.service';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import {NgcFloatButtonModule} from 'ngc-float-button';
 // import {CustExtBrowserXhr} from './_interceptors/custbrowserxhr';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -40,7 +39,6 @@ import { AskComponent } from './ask/ask.component';
       BrowserAnimationsModule,
       OwlDateTimeModule,
       OwlNativeDateTimeModule,
-      NgcFloatButtonModule,
   ],
   providers: [
       {provide: APP_BASE_HREF, useValue : '/' },

@@ -503,13 +503,32 @@ mark,
     height: auto;
 }
 
+.float-bottom-right{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:40px;
+    right:40px;
+    background-color:#D9230F;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+}
+
+.button-float{
+    margin-top:22px;
+}
+
 .fixed-bottom-right {
+    position: relative;
     bottom: 50px;
     right: 50px;
 }
 
 @media (max-width: 576px) {
     .fixed-bottom-right {
+        position: relative;
         bottom: 25px;
         right: 25px;
     }
