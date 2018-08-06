@@ -9,7 +9,7 @@ export class APIInterceptor implements HttpInterceptor {
 
         // change api url
         const urlReq = req.clone(
-            { url: `https://pulseapi.tk${req.url}` }
+            { url: `https://pulseapi.tk:8080${req.url}` }
             );
         // set headers
         if (req.url !== '/authenticate') {
