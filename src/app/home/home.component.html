@@ -1,6 +1,6 @@
 <div id="wrapper">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="https://bootswatch.com/simplex/#">Pulse Check</a>
+    <a class="navbar-brand" href="/">Pulse Check</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,7 +23,7 @@
       </form>
       <ul class="navbar-nav my-2 my-lg-0">
         <li class="nav-item">
-          <a class="nav-nolink">Hello {{profilename}}</a>
+          <a class="nav-nolink"><b>{{profilename}}</b></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Settings</a>
@@ -35,10 +35,8 @@
 
     </div>
   </nav>
-  <div class="container">
 
-    <app-pulse-body></app-pulse-body>
+  <div [ngClass]= "'sub-child-container'" class="container">
+    <router-outlet></router-outlet>
   </div>
-
-
 </div>

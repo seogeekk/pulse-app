@@ -11,6 +11,10 @@ export class UserService {
         return this.http.get<User[]>('/users');
     }
 
+    findUser(username: string) {
+        return this.http.get<any>('/user?username=' + username);
+    }
+
     getById(id: number) {
         return this.http.get('/users/' + id);
     }
