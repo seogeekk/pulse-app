@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Questions</a>
+          <a class="nav-link" href="#">Question</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Users</a>
@@ -17,10 +17,10 @@
           <a class="nav-link" href="#">Teams</a>
         </li>
       </ul>
-      <form class="form-inline">
+      <!--<form class="form-inline">
         <input class="form-control mr-sm-2" type="text" placeholder="Search">
-        <!--<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>-->
-      </form>
+        &lt;!&ndash;<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>&ndash;&gt;
+      </form>-->
       <ul class="navbar-nav my-2 my-lg-0">
         <li class="nav-item">
           <a class="nav-nolink"><b>{{profilename}}</b></a>
@@ -38,5 +38,15 @@
 
   <div [ngClass]= "'sub-child-container'" class="container">
     <router-outlet></router-outlet>
+  </div>
+
+
+
+
+</div>
+<div class="container">
+  <div class="row">
+    <ngc-float-button class="fixed-bottom-right" icon="add" direction="bottom" [routerLink]="['/ask']"></ngc-float-button>
+
   </div>
 </div>

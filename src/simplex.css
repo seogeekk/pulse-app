@@ -503,6 +503,18 @@ mark,
     height: auto;
 }
 
+.fixed-bottom-right {
+    bottom: 50px;
+    right: 50px;
+}
+
+@media (max-width: 576px) {
+    .fixed-bottom-right {
+        bottom: 25px;
+        right: 25px;
+    }
+}
+
 .figure {
     display: inline-block;
 }
