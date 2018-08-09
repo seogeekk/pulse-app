@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { QuestionService } from '../_services/question.service';
+import { AnswerService } from '../_services/answer.service';
+import { Question } from '../_models/question';
 import { Observable } from 'rxjs/Observable';
-
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'app-pulse-body',
@@ -12,18 +14,13 @@ import { Observable } from 'rxjs/Observable';
 export class PulseBodyComponent implements OnInit {
 
     public questions;
+    public answerdata: Map<string, number> = new Map<string, number>();
 
-    public barChartOptions:any = {
+    public barChartOptions: any = {
         scaleShowVerticalLines: false,
         responsive: true
     };
-    public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
     public barChartType = 'horizontalBar';
-    public barChartLegend: boolean = false;
-
-    public chartData:any[] = [
-        {data: [65, 59, 80, 81, 56, 55, 40]}
-    ];
 
     // events
     public chartClicked(e:any):void {
@@ -35,7 +32,8 @@ export class PulseBodyComponent implements OnInit {
     }
 
   constructor(
-        private questionservice: QuestionService
+        private questionservice: QuestionService,
+        private answerservice: AnswerService
   ) {}
 
   ngOnInit() {
@@ -44,15 +42,50 @@ export class PulseBodyComponent implements OnInit {
     this.getAllQuestions();
 
 
+
   }
 
+
   getAllQuestions() {
-      this.questionservice.getAll()
-          .subscribe(
-              data => {
-                  this.questions = data;
-                console.log(data);
-              }
-          );
+      Observable.forkJoin(
+        this.questionservice.getAll()
+      ).subscribe(response => {
+          const questions = <any>response[0];
+
+          const data: Question[] = [];
+
+          for (let i = 0; i < questions.length; i++) {
+              const q: Question = new Question();
+              const question = questions[i];
+              q._id = question._id;
+              q.question = question.question;
+
+              let chartdata = [];
+
+              Observable.forkJoin(
+                  this.answerservice.getCount(question._id)
+              ).subscribe( data => {
+
+                  const answerdata: Map<string, number> = new Map<string, number>();
+                  const answers = <any>data[0];
+                  for (const answer of answers) {
+                      answerdata.set(answer._id, answer.count);
+                  }
+
+                  for (const option of question.options) {
+                      chartdata.push(answerdata.get(option));
+                  }
+              });
+
+              q.options = question.options;
+              q.answers = [{data: chartdata}];
+              q.createdAt = question.createdAt;
+              data.push(q);
+          }
+
+          this.questions = data;
+
+      });
   }
+
 }

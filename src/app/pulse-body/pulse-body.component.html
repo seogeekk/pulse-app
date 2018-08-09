@@ -25,12 +25,12 @@
           <div class="list-group" *ngFor="let question of questions">
             <div class="card border-primary mb-3">
               <div class="card-header">
-                <a data-toggle="collapse" role="button" aria-expanded="false" aria-controls="question-stat" href="#question-stat">{{question.question}}</a>
+                <a data-toggle="collapse" role="button" aria-expanded="false" aria-controls="question-stat" href="#question-stat{{question._id}}">{{question.question}}</a>
               </div>
-              <div class="card-body collapse in" id="question-stat">
+              <div class="card-body collapse in" id="question-stat{{question._id}}">
                 <div class="bs-component">
                   <canvas baseChart
-                          [datasets]="chartData"
+                          [datasets]="question.answers"
                           [labels]="question.options"
                           [options]="barChartOptions"
                           [legend]="false"
