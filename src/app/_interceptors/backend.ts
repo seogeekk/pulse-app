@@ -31,7 +31,7 @@ export class APIInterceptor implements HttpInterceptor {
                     if (err instanceof HttpErrorResponse) {
                         console.log(err.status);
                         console.log(err.statusText);
-                        if (err.status === 401) {
+                        if (err.status === 403) {
                             window.location.href = '/login';
                         }
                     }
