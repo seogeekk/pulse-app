@@ -1,137 +1,124 @@
 <div class="jumbotron-wrapper">
 
-
-  <div class="page-header" id="banner">
-    <div class="row">
-      <div class="col-lg-8 col-md-7 col-sm-6">
-        <h1></h1>
-      </div>
-    </div>
-  </div>
-
-
-  <div id="bs-docs-section clearfix">
-    <div class="row">
-      <div class="col-lg-9">
-        <div class="page-header">
-          <h1>{{question.question}}</h1>
-        </div>
-      </div>
-    </div>
-
-    <div class="bs-component" *ngIf="question.notified">
+  <div class="jumbotron">
+    <div id="bs-docs-section clearfix">
       <div class="row">
         <div class="col-lg-9">
-          <div class="bs-component">
-            <p class="text-muted">
-              <a><img src="{{submitter.imgurl}}" class="profile-image">&nbsp;{{submitter.name}}</a><br/>
-              <small><span class="badge badge-info">Created on</span><i>&nbsp;{{question.createdAt | date: "MMM d, y h:mm:ss a"}}</i></small>
-            </p>
-          </div>
-
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6">
-          <p class="text-muted"></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-3">
-          <div class="card border-danger mb-3" style="max-width: 20rem;">
-            <div class="card-header">
-              <div class="row">
-                <div class="col-md-3">
-                  <i class="fa fa-check-circle fa-2x"></i>
-                </div>
-                <div class="col-md-9 text-right">
-                  <div class="huge">{{totalresponded}}</div>
-                  <div>Responded</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="card border-success mb-3" style="max-width: 20rem;">
-            <div class="card-header">
-              <div class="row">
-                <div class="col-md-3">
-                  <i class="fa fa-users fa-2x"></i>
-                </div>
-                <div class="col-md-9 text-right">
-                  <div class="huge">{{totalmembers}}</div>
-                  <div>Total Members</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="card border-info mb-3" style="max-width: 20rem;">
-            <div class="card-header">
-              <div class="row">
-                <div class="col-md-3">
-                  <i class="fa fa-clock-o fa-2x"></i>
-                </div>
-                <div class="col-md-9 text-right">
-                  <div class="huge">{{avgresponse | number: '1.2-2'}}</div>
-                  <div>Avg Time</div>
-                </div>
-              </div>
-            </div>
+          <div class="page-header">
+            <h1>{{question.question}}</h1>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-lg-9">
-          <canvas baseChart
-                  [data]="question.answers"
-                  [labels]="question.options"
-                  chartType="pie"
-                  (chartHover)="chartHovered($event)"
-                  (chartClick)="chartClicked($event)"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <div class="bs-component" *ngIf="!question.notified">
-      <div class="row">
-        <div class="col-lg-9">
-          <div class="bs-component">
-            <p class="text-muted">
-              <a><img src="{{submitter.imgurl}}" class="profile-image">&nbsp;{{submitter.name}}</a><br/>
-              <small><span class="badge badge-info">Created on</span><i>&nbsp;{{question.createdAt | date: "MMM d, y h:mm:ss a"}}</i></small>
-            </p>
-          </div>
-
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <h4>Options:</h4>
-          <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let option of question.options">
-              {{option}}
-              <!--<span class="badge badge-primary badge-pill">14</span>-->
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-9">
-          <div class="bs-component">
-            <blockquote class="blockquote">
-              <p class="mb-0"><br/>
-                <i class="fa fa-calendar"></i> Scheduled on <span class="badge badge-warning">{{question.schedule | date: "MMM d, y h:mm:ss a"}}</span>
+      <div class="bs-component" *ngIf="question.notified">
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="bs-component">
+              <p class="text-muted">
+                <a><img src="{{submitter.imgurl}}" class="profile-image">&nbsp;{{submitter.name}}</a><br/>
+                <small><span class="badge badge-info">Created on</span><i>&nbsp;{{question.createdAt | date: "MMM d, y h:mm:ss a"}}</i></small>
               </p>
-            </blockquote>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card border-danger mb-3" style="max-width: 20rem;">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-3">
+                    <i class="fa fa-check-circle fa-2x"></i>
+                  </div>
+                  <div class="col-md-9 text-right">
+                    <div class="huge">{{totalresponded}}</div>
+                    <div>Responded</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card border-success mb-3" style="max-width: 20rem;">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-3">
+                    <i class="fa fa-users fa-2x"></i>
+                  </div>
+                  <div class="col-md-9 text-right">
+                    <div class="huge">{{totalmembers}}</div>
+                    <div>Total Members</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card border-info mb-3" style="max-width: 20rem;">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-3">
+                    <i class="fa fa-clock-o fa-2x"></i>
+                  </div>
+                  <div class="col-md-9 text-right">
+                    <div class="huge">{{avgresponse | number: '1.2-2'}}</div>
+                    <div>Avg Time</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <canvas baseChart
+                    [data]="question.answers"
+                    [labels]="question.options"
+                    chartType="pie"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
           </div>
         </div>
       </div>
+
+      <div class="bs-component" *ngIf="!question.notified">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="bs-component">
+              <p class="text-muted">
+                <a><img src="{{submitter.imgurl}}" class="profile-image">&nbsp;{{submitter.name}}</a><br/>
+                <small><span class="badge badge-info">Created on</span><i>&nbsp;{{question.createdAt | date: "MMM d, y h:mm:ss a"}}</i></small>
+              </p>
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-9">
+            <h4>Options:</h4>
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let option of question.options">
+                {{option}}
+                <!--<span class="badge badge-primary badge-pill">14</span>-->
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="bs-component">
+              <blockquote class="blockquote">
+                <p class="mb-0"><br/>
+                  <i class="fa fa-calendar"></i> Scheduled on <span class="badge badge-warning">{{question.schedule | date: "MMM d, y h:mm:ss a"}}</span>
+                </p>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
-
-
   </div>
 </div>
