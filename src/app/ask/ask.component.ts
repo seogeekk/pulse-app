@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 import {FormGroup, FormArray, FormBuilder, Validators, FormControl} from '@angular/forms';
+import { Router } from '@angular/router';
 import {Question} from '../_models/question';
 import {Group} from '../_models/group';
 import {QuestionService} from '../_services/question.service';
 import {GroupService} from '../_services/group.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {AlertService} from '../_services/alert.service';
+import {isSuccess} from '@angular/http/src/http_utils';
 
 @Component({
   selector: 'app-ask',
@@ -20,6 +23,10 @@ export class AskComponent implements OnInit {
   question: Question;
   loading = false;
   groups = [];
+
+  alertmessage;
+
+  private userId;
 
   groupSearch: FormControl = new FormControl();
 
@@ -35,13 +42,16 @@ export class AskComponent implements OnInit {
 
   constructor(
       private _fb: FormBuilder,
-      private questionService: QuestionService,
-      private groupService: GroupService
+      private questionservice: QuestionService,
+      private groupservice: GroupService,
+      private alertservice: AlertService,
+      private router: Router
   ) {
 
   }
 
   ngOnInit() {
+        this.userId = localStorage.getItem('userId');
       this.askForm = this._fb.group({
           title: new FormControl('', Validators.required),
           groupId: this.groupSearch,
@@ -52,12 +62,12 @@ export class AskComponent implements OnInit {
 
       this.getGroups();
 
-      console.log(localStorage.getItem('userId'));
+      this.alertservice.getMessage().subscribe(message => { this.alertmessage = message; });
   }
 
 
     getGroups() {
-        this.groupService.getAll()
+        this.groupservice.getAll()
             .subscribe((data: Group[]) => {
                 this.groups = data;
                 this.groupResult = this.groups;
@@ -97,20 +107,24 @@ export class AskComponent implements OnInit {
         options.push(option.itemname);
     }
     this.question.options = options;
-    this.question.userId = localStorage.getItem('userId');
+    this.question.userId = this.userId;
     this.question.schedule = this.askForm.value.schedule;
     this.question.groupId = this.askForm.value.groupId;
 
     console.log(this.question);
 
-    this.questionService.create(this.question)
+    this.questionservice.create(this.question)
         .subscribe(
             data => {
-              console.log(data);
+                console.log(data);
+              this.alertservice.success('Question successfully created');
+              //this.router.navigate(['question/' + data.question._id]);
+            },
+            error => {
+                console.log(error);
+                this.alertservice.error('Internal error!');
             }
         )
-
-    //console.log(this.question);
 
     this.loading = false;
 

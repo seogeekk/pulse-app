@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './_guards/auth.guard';
 import {AskComponent} from './ask/ask.component';
 import {PulseBodyComponent} from './pulse-body/pulse-body.component';
+import {QuestionComponent} from './question/question.component';
 
 const appRoutes: Routes = [
     // uncomment to redirect to login
@@ -16,7 +17,8 @@ const appRoutes: Routes = [
                 path: 'dashboard',
                 component: PulseBodyComponent
             },
-            { path: 'ask', component: AskComponent }
+            { path: 'ask', component: AskComponent },
+            { path: 'question/:questionId', component: QuestionComponent }
         ],
         canActivate: [AuthGuard]
     },

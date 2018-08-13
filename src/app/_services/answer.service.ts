@@ -12,15 +12,8 @@ export class AnswerService {
         return this.http.get<Answer[]>('/answer?count=true&questionId=' + id);
     }
 
-    // create(question: Question) {
-    //     return this.http.post('/questions', question);
-    // }
-    //
-    // update(question: Question) {
-    //     return this.http.put('/questions/' + question._id, question);
-    // }
-    //
-    // delete(id: number) {
-    //     return this.http.delete('/questions/' + id);
-    // }
+    getAvgTime(id: string) {
+        return this.http.get<any>('/answer?time=true&questionId=' + id);
+    }
+
 }

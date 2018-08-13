@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { User } from '../_models/user';
+import {FBUser} from '../_models/fbuser';
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,11 @@ export class UserService {
 
     findUser(username: string) {
         return this.http.get<any>('/user?username=' + username);
+    }
+
+    findFBUser(memberId: string) {
+        console.log('Finding FB User: ' + memberId);
+        return this.http.get<FBUser>('/fb/member/' + memberId);
     }
 
     getById(id: number) {

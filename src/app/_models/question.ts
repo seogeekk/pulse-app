@@ -4,7 +4,7 @@ export class Question {
     _id: string;
     question: string;
     options: string[];
-    answers: any[];
+    answers: number[];
     schedule: [{ time: Date}];
     groupId: string;
     location: string;

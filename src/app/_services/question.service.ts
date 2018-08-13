@@ -11,6 +11,10 @@ export class QuestionService {
         return this.http.get<Question[]>('/questions');
     }
 
+    getQuestion(id: string) {
+        return this.http.get<Question>('/questions/' + id);
+    }
+
     create(question: Question) {
         return this.http.post('/questions', question);
     }

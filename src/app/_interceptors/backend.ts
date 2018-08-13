@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
@@ -21,7 +24,19 @@ export class APIInterceptor implements HttpInterceptor {
                     }}
             );
 
-            return next.handle(apiReq);
+            return next.handle(apiReq)
+                .catch(err => {
+                    // onError
+                    console.log(err);
+                    if (err instanceof HttpErrorResponse) {
+                        console.log(err.status);
+                        console.log(err.statusText);
+                        if (err.status === 401) {
+                            window.location.href = '/login';
+                        }
+                    }
+                    return Observable.throw(err);
+                }) as any;;
         }
 
         return next.handle(urlReq);

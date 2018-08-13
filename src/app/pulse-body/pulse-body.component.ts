@@ -14,7 +14,6 @@ import 'rxjs/add/observable/forkJoin';
 export class PulseBodyComponent implements OnInit {
 
     public questions;
-    public answerdata: Map<string, number> = new Map<string, number>();
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -37,12 +36,7 @@ export class PulseBodyComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-
-
     this.getAllQuestions();
-
-
-
   }
 
 
@@ -60,7 +54,7 @@ export class PulseBodyComponent implements OnInit {
               q._id = question._id;
               q.question = question.question;
 
-              let chartdata = [];
+              const chartdata = [];
 
               Observable.forkJoin(
                   this.answerservice.getCount(question._id)
@@ -73,12 +67,17 @@ export class PulseBodyComponent implements OnInit {
                   }
 
                   for (const option of question.options) {
-                      chartdata.push(answerdata.get(option));
+                      const dat = answerdata.get(option);
+                      if (! dat) {
+                          chartdata.push(0);
+                      } else {
+                          chartdata.push(dat);
+                      }
                   }
               });
 
               q.options = question.options;
-              q.answers = [{data: chartdata}];
+              q.answers = chartdata;
               q.createdAt = question.createdAt;
               data.push(q);
           }

@@ -3,7 +3,7 @@
     <div class="col-md-6 col-md-offset-3">
       <h2>Ask</h2>
       <form [formGroup]="askForm" (ngSubmit)="askForm.valid && ask()" novalidate>
-
+        <div *ngIf="alertmessage" [ngClass]="{ 'alert': alertmessage, 'alert-success': alertmessage.type === 'success', 'alert-danger': alertmessage.type === 'error' }">{{alertmessage.text}}</div>
 
 
         <div class="form-group" [ngClass]="{'error': askForm.controls['title'].errors }">
@@ -16,21 +16,19 @@
         <div class="form-group">
           <label for="groups">Group</label>
           <select class="custom-select" name="groups" [formControl]="groupSearch">
-            <option *ngFor="let item of groupResult" value={{item._id}}>
-              {{item.group}}
+            <option *ngFor="let item of groupResult" value={{item.id}}>
+              {{item.name}}
             </option>
           </select>
 
         </div>
 
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{'error': askForm.controls['schedule'].errors }">
 
           <label for="schedule">Schedule </label>
-
-          <input class="form-control" formControlName="schedule" [owlDateTimeTrigger]="dt7" [owlDateTime]="dt7">
+          <input class="form-control" formControlName="schedule" [owlDateTimeTrigger]="dt7" [owlDateTime]="dt7" required>
           <owl-date-time #dt7></owl-date-time>
-
-
+          <div *ngIf ="askForm.controls['schedule'].hasError('required') && askForm.controls['schedule'].touched " class="help-block">Schedule is required</div>
         </div>
 
 
@@ -53,10 +51,11 @@
           <button name="add" type="button" (click)="addNewRow()" class="btn btn-outline-primary">Add Option</button>
         </div>
 
+        <p>{{askForm.value|json}}</p>
 
         <div class="form-group">
 
-          <button [disabled]="loading" class="btn btn-primary">Login</button>
+          <button [disabled]="loading" class="btn btn-primary">Save</button>
           <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
         </div>
       </form>

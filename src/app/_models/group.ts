@@ -1,6 +1,6 @@
 export class Group {
-    _id: string;
-    group: string;
+    id: string;
+    name: string;
     type: string;
     members: string[];
     admins: string[];

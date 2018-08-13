@@ -29,8 +29,9 @@
               </div>
               <div class="card-body collapse in" id="question-stat{{question._id}}">
                 <div class="bs-component">
+                  <p class="text-muted"><span class="badge badge-info">Created on</span> {{question.createdAt | date: "MMM d, y h:mm:ss a"}}</p>
                   <canvas baseChart
-                          [datasets]="question.answers"
+                          [data]="question.answers"
                           [labels]="question.options"
                           [options]="barChartOptions"
                           [legend]="false"
@@ -39,7 +40,7 @@
                           (chartClick)="chartClicked($event)"></canvas>
                 </div>
                 <div class="bs-component">
-                  <p class="text-muted"><span class="badge badge-info">Created on</span> {{question.createdAt | date: "MMM d, y h:mm:ss a"}}</p>
+                  <p class="text-right"><a routerLink="/question/{{question._id}}">View Details <i class="fa fa-play"></i></a></p>
                 </div>
               </div>
             </div>

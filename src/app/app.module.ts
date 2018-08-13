@@ -28,6 +28,8 @@ import { GroupService } from './_services/group.service';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/user.service';
 import { AnswerService } from './_services/answer.service';
+import { QuestionComponent } from './question/question.component';
+import {AlertService} from './_services/alert.service';
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { AnswerService } from './_services/answer.service';
     LoginComponent,
     HomeComponent,
     PulseBodyComponent,
-    AskComponent
+    AskComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule, Routing, FormsModule, HttpClientModule, ChartsModule, ReactiveFormsModule,
@@ -53,7 +56,8 @@ import { AnswerService } from './_services/answer.service';
       QuestionService,
       UserService,
       GroupService,
-      AnswerService
+      AnswerService,
+      AlertService
       ],
   bootstrap: [AppComponent]
 })
