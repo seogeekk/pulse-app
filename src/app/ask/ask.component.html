@@ -15,7 +15,7 @@
 
         <div class="form-group">
           <label for="groups">Group</label>
-          <select class="custom-select" name="groups" [formControl]="groupSearch">
+          <select class="custom-select" name="groups" [formControl]="groupId">
             <option *ngFor="let item of groupResult" value={{item.id}}>
               {{item.name}}
             </option>

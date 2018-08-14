@@ -9468,8 +9468,8 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .profile-image {
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
 }
 
 .visible {
@@ -9478,6 +9478,12 @@ a.text-dark:hover, a.text-dark:focus {
 
 .invisible {
     visibility: hidden !important;
+}
+
+@media only screen and (max-width: 768px) {
+    .div-hide {
+        display: none;
+    }
 }
 
 @media print {

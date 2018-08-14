@@ -18,6 +18,7 @@ const appRoutes: Routes = [
                 component: PulseBodyComponent
             },
             { path: 'ask', component: AskComponent },
+            { path: 'ask/edit/:questionId', component: AskComponent },
             { path: 'question/:questionId', component: QuestionComponent }
         ],
         canActivate: [AuthGuard]
