@@ -53,7 +53,7 @@ export class AskComponent implements OnInit {
 
   }
 
-  async ngOnInit(): void {
+  async ngOnInit() {
 
       await this.route.params.subscribe((urlParams) => {
           this._id = urlParams['questionId'];
