@@ -4,12 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-
         // change api url
         const urlReq = req.clone(
             { url: `https://pulseapi.tk:8080${req.url}` }
@@ -32,7 +31,7 @@ export class APIInterceptor implements HttpInterceptor {
                         console.log(err.status);
                         console.log(err.statusText);
                         if (err.status === 403) {
-                            window.location.href = 'login';
+                            localStorage.clear();
                         }
                     }
                     return Observable.throw(err);

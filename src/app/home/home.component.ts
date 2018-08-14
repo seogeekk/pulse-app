@@ -18,7 +18,6 @@ export class HomeComponent implements OnInit {
     if (this.router.url === '/') {
         this.router.navigate(['/dashboard']);
     }
-
     // set profile detail
     this.profilename = localStorage.getItem('profilename');
 
