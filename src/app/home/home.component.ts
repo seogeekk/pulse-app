@@ -12,10 +12,14 @@ export class HomeComponent implements OnInit {
 
   constructor(private router: Router) { }
 
+  public routepage;
+
   ngOnInit() {
 
+    this.routepage = this.router.url;
+
     // redirect to dashboard if home page
-    if (this.router.url === '/') {
+    if (this.routepage === '/') {
         this.router.navigate(['/dashboard']);
     }
     // set profile detail

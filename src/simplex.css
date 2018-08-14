@@ -9467,6 +9467,11 @@ a.text-dark:hover, a.text-dark:focus {
     border: 0;
 }
 
+.member-image {
+    height: 80px;
+    width: 80px;
+}
+
 .profile-image {
     height: 30px;
     width: 30px;
@@ -9483,6 +9488,10 @@ a.text-dark:hover, a.text-dark:focus {
 @media only screen and (max-width: 768px) {
     .div-hide {
         display: none;
+    }
+    .member-image {
+        height: 50px;
+        width: 50px;
     }
 }
 

@@ -94,6 +94,7 @@ export class AskComponent implements OnInit {
           }
       } else {
           this.addNewRow();
+          this.addNewRow();
       }
 
 
@@ -150,9 +151,8 @@ export class AskComponent implements OnInit {
           this.questionservice.update(this.question)
               .subscribe(
                   data => {
-                      const result: Question = <Question> data;
                       this.alertservice.success('Question successfully updated');
-                      this.router.navigate(['question/' + result._id]);
+                      this.router.navigate(['question/' + this.question._id]);
                   },
                   error => {
                       console.log(error);

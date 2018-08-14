@@ -2,69 +2,77 @@
   <div class="container">
     <div class="col-md-6 col-md-offset-3">
       <h2>Ask</h2>
-      <form [formGroup]="askForm" (ngSubmit)="askForm.valid && ask()" novalidate>
-        <div *ngIf="alertmessage" [ngClass]="{ 'alert': alertmessage, 'alert-success': alertmessage.type === 'success', 'alert-danger': alertmessage.type === 'error' }">{{alertmessage.text}}</div>
 
 
-        <div class="form-group" [ngClass]="{'error': askForm.controls['title'].errors }">
-          <label for="question">Question</label>
-          <input type="text" class="form-control" formControlName="title"
-                 required />
-          <div *ngIf ="askForm.controls['title'].hasError('required') && askForm.controls['title'].touched " class="help-block">Question is required</div>
-        </div>
+    </div>
 
-        <div class="form-group">
-          <label for="groups">Group</label>
-          <select class="custom-select" name="groups" #groupoption formControlName="groupId" (change)="filterGroups(groupoption.value)">
-            <option *ngFor="let item of groupResult" value="{{item.id}}">
-              {{item.name}}
-            </option>
-          </select>
-
-        </div>
-
-        <div class="form-group" [ngClass]="{'error': askForm.controls['schedule'].errors }">
-
-          <label for="schedule">Schedule </label>
-          <input class="form-control" formControlName="schedule" [owlDateTimeTrigger]="dt7" [owlDateTime]="dt7" required>
-          <owl-date-time #dt7></owl-date-time>
-          <div *ngIf ="askForm.controls['schedule'].hasError('required') && askForm.controls['schedule'].touched " class="help-block">Schedule is required</div>
-        </div>
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-lg-12">
+          <form [formGroup]="askForm" (ngSubmit)="askForm.valid && ask()" novalidate>
+            <div *ngIf="alertmessage" [ngClass]="{ 'alert': alertmessage, 'alert-success': alertmessage.type === 'success', 'alert-danger': alertmessage.type === 'error' }">{{alertmessage.text}}</div>
 
 
-        <div class="form-group">
-          <label>Options: </label>
+            <div class="form-group" [ngClass]="{'error': askForm.controls['title'].errors }">
+              <label for="question">Question</label>
+              <input type="text" class="form-control" formControlName="title"
+                     required />
+              <div *ngIf ="askForm.controls['title'].hasError('required') && askForm.controls['title'].touched " class="help-block">Question is required</div>
+            </div>
 
-          <div formArrayName="itemRows">
-            <div *ngFor="let itemrow of itemRows.controls; let i=index"  [formGroupName]="i">
-              <div class="form-group" [ngClass]="{'error': askForm.get(['itemRows', i, 'itemname']).errors}">
-                <div class="input-group">
-                  <input formControlName="itemname" class="form-control" required>
-                  <span class="input-group-btn">
-                    <button *ngIf="itemRows.controls.length > 1" (click)="deleteRow(i)" class="btn btn-group">-</button>
+            <div class="form-group">
+              <label for="groups">Group</label>
+              <select class="custom-select" name="groups" #groupoption formControlName="groupId" (change)="filterGroups(groupoption.value)">
+                <option *ngFor="let item of groupResult" value="{{item.id}}">
+                  {{item.name}}
+                </option>
+              </select>
+
+            </div>
+
+            <div class="form-group" [ngClass]="{'error': askForm.controls['schedule'].errors }">
+
+              <label for="schedule">Schedule </label>
+              <input class="form-control" formControlName="schedule" [owlDateTimeTrigger]="dt7" [owlDateTime]="dt7" required>
+              <owl-date-time #dt7></owl-date-time>
+              <div *ngIf ="askForm.controls['schedule'].hasError('required') && askForm.controls['schedule'].touched " class="help-block">Schedule is required</div>
+            </div>
+
+
+            <div class="form-group">
+              <label>Options: </label>
+
+              <div formArrayName="itemRows">
+                <div *ngFor="let itemrow of itemRows.controls; let i=index"  [formGroupName]="i">
+                  <div class="form-group" [ngClass]="{'error': askForm.get(['itemRows', i, 'itemname']).errors}">
+                    <div class="input-group">
+                      <input formControlName="itemname" class="form-control" required>
+                      <span class="input-group-btn">
+                    <button *ngIf="itemRows.controls.length > 2" (click)="deleteRow(i)" class="btn btn-group">-</button>
                   </span>
+                    </div>
+                    <div *ngIf ="askForm.get(['itemRows', i, 'itemname']).hasError('required') && askForm.get(['itemRows', i, 'itemname']).touched" class="help-block">Option is required</div>
+                  </div>
                 </div>
-                <div *ngIf ="askForm.get(['itemRows', i, 'itemname']).hasError('required') && askForm.get(['itemRows', i, 'itemname']).touched" class="help-block">Option is required</div>
+              </div>
+              <button name="add" type="button" (click)="addNewRow()" class="btn btn-outline-primary">Add Option</button>
+            </div>
+
+            <div class="form-group">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="commentFlag" formControlName="commentFlag">
+                <label class="custom-control-label" for="commentFlag">Allow Comments</label>
               </div>
             </div>
-          </div>
-          <button name="add" type="button" (click)="addNewRow()" class="btn btn-outline-primary">Add Option</button>
+
+            <div class="form-group">
+
+              <button [disabled]="loading || !askForm.valid" class="btn btn-primary">Save</button>
+              <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
+          </form>
         </div>
-
-        <div class="form-group">
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="commentFlag" formControlName="commentFlag">
-            <label class="custom-control-label" for="commentFlag">Allow Comments</label>
-          </div>
-        </div>
-
-        <div class="form-group">
-
-          <button [disabled]="loading" class="btn btn-primary">Save</button>
-          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-        </div>
-      </form>
-
+      </div>
     </div>
   </div>
 </div>

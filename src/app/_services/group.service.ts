@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {Group} from '../_models/group';
-import {Member} from '../_models/members';
+import {Member} from '../_models/member';
 
 @Injectable()
 export class GroupService {

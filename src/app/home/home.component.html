@@ -8,13 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Question</a>
+          <a class="nav-link" routerLink="/dashboard">Question</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Users</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Teams</a>
+          <a class="nav-link" routerLink="/groups">Teams</a>
         </li>
       </ul>
       <!--<form class="form-inline">
@@ -41,9 +38,12 @@
   </div>
 
 
-  <a [routerLink]="['/ask']" class="float-bottom-right">
-    <i class="fa fa-plus button-float "></i>
-    <!--<ngc-float-button class="button-float" icon="add" direction="bottom" ></ngc-float-button>-->
-  </a>
+  <div>
+    <a routerLink="/ask" class="float-bottom-right">
+      <i class="fa fa-plus button-float "></i>
+      <!--<ngc-float-button class="button-float" icon="add" direction="bottom" ></ngc-float-button>-->
+    </a>
+  </div>
+
 </div>
 

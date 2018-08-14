@@ -1,0 +1,28 @@
+<div class="jumbotron-wrapper">
+
+
+  <div id="bs-docs-section clearfix">
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="page-header">
+          <h1>Members</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-lg-9">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let member of members">
+              <a routerLink="/member/{{member.id}}">{{member.name}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+

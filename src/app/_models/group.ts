@@ -4,4 +4,5 @@ export class Group {
     type: string;
     members: string[];
     admins: string[];
+    imgurl: string;
 }

@@ -32,6 +32,9 @@ import { UserService } from './_services/user.service';
 import { AnswerService } from './_services/answer.service';
 import { QuestionComponent } from './question/question.component';
 import {AlertService} from './_services/alert.service';
+import { GroupsComponent } from './groups/groups.component';
+import { MembersComponent } from './members/members.component';
+import { MemberComponent } from './member/member.component';
 
 
 @NgModule({
@@ -41,7 +44,10 @@ import {AlertService} from './_services/alert.service';
     HomeComponent,
     PulseBodyComponent,
     AskComponent,
-    QuestionComponent
+    QuestionComponent,
+    GroupsComponent,
+    MembersComponent,
+    MemberComponent
   ],
   imports: [
     BrowserModule, Routing, FormsModule, HttpClientModule, ChartsModule, ReactiveFormsModule,

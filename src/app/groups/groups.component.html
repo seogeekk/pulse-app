@@ -1,0 +1,29 @@
+<div class="jumbotron-wrapper">
+
+
+  <div id="bs-docs-section clearfix">
+    <div class="row">
+      <div class="col-lg-9">
+        <div class="page-header">
+          <h1>Groups</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="list-group">
+            <li class="list-group-item d-flex" *ngFor="let group of groups">
+              <img src="{{group.imgurl}}" class="profile-image rounded-circle">&nbsp;&nbsp;
+              <a routerLink="/groups/members/{{group.id}}">{{group.name}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
