@@ -8,7 +8,6 @@ import {QuestionService} from '../_services/question.service';
 import {GroupService} from '../_services/group.service';
 import {AlertService} from '../_services/alert.service';
 
-import { GroupsFilter} from '../filter/groups.filter';
 
 @Component({
   selector: 'app-ask',
