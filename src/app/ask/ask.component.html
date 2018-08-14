@@ -15,7 +15,7 @@
 
         <div class="form-group">
           <label for="groups">Group</label>
-          <select class="custom-select" name="groups" [formControl]="groupId">
+          <select class="custom-select" name="groups" formControlName="groupId">
             <option *ngFor="let item of groupResult" value={{item.id}}>
               {{item.name}}
             </option>
@@ -36,12 +36,12 @@
           <label>Options: </label>
 
           <div formArrayName="itemRows">
-            <div *ngFor="let itemrow of askForm.controls.itemRows.controls; let i=index"  [formGroupName]="i">
+            <div *ngFor="let itemrow of itemRows.controls; let i=index"  [formGroupName]="i">
               <div class="form-group" [ngClass]="{'error': askForm.get(['itemRows', i, 'itemname']).errors}">
                 <div class="input-group">
                   <input formControlName="itemname" class="form-control" required>
                   <span class="input-group-btn">
-                    <button *ngIf="askForm.controls.itemRows.controls.length > 1" (click)="deleteRow(i)" class="btn btn-group">-</button>
+                    <button *ngIf="itemRows.controls.length > 1" (click)="deleteRow(i)" class="btn btn-group">-</button>
                   </span>
                 </div>
                 <div *ngIf ="askForm.get(['itemRows', i, 'itemname']).hasError('required') && askForm.get(['itemRows', i, 'itemname']).touched" class="help-block">Option is required</div>

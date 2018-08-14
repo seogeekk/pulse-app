@@ -11,4 +11,5 @@ export class Question {
     userId: string;
     createdAt: Date;
     updatedAt: Date;
+    notified: boolean;
 }

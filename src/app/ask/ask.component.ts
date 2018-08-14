@@ -53,6 +53,8 @@ export class AskComponent implements OnInit {
 
   }
 
+    get itemRows() { return <FormArray>this.askForm.get('itemRows'); }
+
   async ngOnInit() {
 
       await this.route.params.subscribe((urlParams) => {
