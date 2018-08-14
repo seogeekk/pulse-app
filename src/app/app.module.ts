@@ -11,7 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // Routing
 import { Routing } from './app.routing';
 
-
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 // Helpers
 import { AuthGuard } from './_guards/auth.guard';
@@ -50,7 +50,8 @@ import {AlertService} from './_services/alert.service';
       OwlNativeDateTimeModule,
   ],
   providers: [
-      {provide: APP_BASE_HREF, useValue : '/' },
+      // {provide: APP_BASE_HREF, useValue : '/' },
+      {provide: LocationStrategy, useClass: HashLocationStrategy},
       {provide: HTTP_INTERCEPTORS, useClass: APIInterceptor,
           multi: true},
       AuthGuard,
