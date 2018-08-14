@@ -32,11 +32,11 @@ export class APIInterceptor implements HttpInterceptor {
                         console.log(err.status);
                         console.log(err.statusText);
                         if (err.status === 403) {
-                            window.location.href = '/login';
+                            window.location.href = 'login';
                         }
                     }
                     return Observable.throw(err);
-                }) as any;;
+                }) as any;
         }
 
         return next.handle(urlReq);
