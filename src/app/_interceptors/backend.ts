@@ -32,6 +32,7 @@ export class APIInterceptor implements HttpInterceptor {
                         console.log(err.statusText);
                         if (err.status === 403) {
                             localStorage.clear();
+                            window.location.href = '#/login';
                         }
                     }
                     return Observable.throw(err);

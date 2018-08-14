@@ -15,8 +15,8 @@
 
         <div class="form-group">
           <label for="groups">Group</label>
-          <select class="custom-select" name="groups" formControlName="groupId">
-            <option *ngFor="let item of groupResult" value={{item.id}}>
+          <select class="custom-select" name="groups" #groupoption formControlName="groupId" (change)="filterGroups(groupoption.value)">
+            <option *ngFor="let item of groupResult" value="{{item.id}}">
               {{item.name}}
             </option>
           </select>
@@ -49,6 +49,13 @@
             </div>
           </div>
           <button name="add" type="button" (click)="addNewRow()" class="btn btn-outline-primary">Add Option</button>
+        </div>
+
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="commentFlag" formControlName="commentFlag">
+            <label class="custom-control-label" for="commentFlag">Allow Comments</label>
+          </div>
         </div>
 
         <div class="form-group">

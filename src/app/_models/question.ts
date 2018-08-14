@@ -12,4 +12,5 @@ export class Question {
     createdAt: Date;
     updatedAt: Date;
     notified: boolean;
+    comment: boolean;
 }

@@ -6,11 +6,9 @@ import {Question} from '../_models/question';
 import {Group} from '../_models/group';
 import {QuestionService} from '../_services/question.service';
 import {GroupService} from '../_services/group.service';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 import {AlertService} from '../_services/alert.service';
-import {isSuccess} from '@angular/http/src/http_utils';
-import {forEach} from '@angular/router/src/utils/collection';
+
+import { GroupsFilter} from '../filter/groups.filter';
 
 @Component({
   selector: 'app-ask',
@@ -18,14 +16,14 @@ import {forEach} from '@angular/router/src/utils/collection';
   styleUrls: ['./ask.component.css']
 })
 export class AskComponent implements OnInit {
-  model: any = {};
-  askForm: FormGroup;
+
+  public askForm: FormGroup;
 
   public question: Question = new Question();
   loading = false;
   groups = [];
 
-  alertmessage;
+  public alertmessage: string;
 
   private userId;
   private _id;
@@ -55,16 +53,29 @@ export class AskComponent implements OnInit {
 
     get itemRows() { return <FormArray>this.askForm.get('itemRows'); }
 
+    filterGroups(id: string) {
+        let group = '';
+        const result = this.groupResult.filter(item => item.id === id);
+        if (result.length === 1) {
+            group = result[0].name;
+        }
+        return group;
+    }
+
   async ngOnInit() {
+
 
       await this.route.params.subscribe((urlParams) => {
           this._id = urlParams['questionId'];
           console.log('param: ' + this._id);
       });
 
+      this.groupResult = <Group[]> await this.getGroups();
+
       if (this._id) {
           console.log('Query question');
           this.question = <Question> await this.getQuestionDetail(this._id);
+          // get group if it's provided
           console.log(this.question);
       }
 
@@ -73,7 +84,8 @@ export class AskComponent implements OnInit {
           title: new FormControl(this.question.question, Validators.required),
           groupId: new FormControl(this.question.groupId, Validators.required),
           schedule: new FormControl(this.question.schedule, Validators.required),
-          itemRows: this._fb.array([])
+          itemRows: this._fb.array([]),
+          commentFlag: new FormControl(this.question.comment)
       });
 
       if (this.question.options) {
@@ -84,7 +96,7 @@ export class AskComponent implements OnInit {
       } else {
           this.addNewRow();
       }
-      this.getGroups();
+
 
       this.alertservice.getMessage().subscribe(message => { this.alertmessage = message; });
   }
@@ -95,12 +107,8 @@ export class AskComponent implements OnInit {
   }
 
   getGroups() {
-    this.groupservice.getAll()
-        .subscribe((data: Group[]) => {
-            this.groups = data;
-            this.groupResult = this.groups;
-            console.log(data);
-        });
+    return this.groupservice.getAll()
+        .map((data: Group[]) => data).toPromise();
   }
 
   initItemRows(options: string) {
@@ -123,27 +131,29 @@ export class AskComponent implements OnInit {
   ask() {
     this.loading = true;
 
+      this.question.question = this.askForm.value.title;
+
+      const options = [];
+      for (const option of this.askForm.value.itemRows) {
+          options.push(option.itemname);
+      }
+
+      this.question.options = options;
+      this.question.userId = this.userId;
+      this.question.schedule = this.askForm.value.schedule;
+      this.question.groupId = this.askForm.value.groupId;
+      this.question.comment = this.askForm.value.commentFlag;
+
+      console.log(this.question);
     // Build my payload
       if (this.question._id) {
-          this.question.question = this.askForm.value.title;
-
-          const options = [];
-          for (const option of this.askForm.value.itemRows) {
-              options.push(option.itemname);
-          }
-          this.question.options = options;
-          this.question.userId = this.userId;
-          this.question.schedule = this.askForm.value.schedule;
-          this.question.groupId = this.askForm.value.groupId;
-
-          console.log(this.question);
 
           this.questionservice.update(this.question)
               .subscribe(
                   data => {
-                      console.log(data);
+                      const result: Question = <Question> data;
                       this.alertservice.success('Question successfully updated');
-                      //this.router.navigate(['question/' + data.question._id]);
+                      this.router.navigate(['question/' + result._id]);
                   },
                   error => {
                       console.log(error);
@@ -152,26 +162,14 @@ export class AskComponent implements OnInit {
               );
 
       } else {
-          // create new
-          this.question.question = this.askForm.value.title;
 
-          const options = [];
-          for (const option of this.askForm.value.itemRows) {
-              options.push(option.itemname);
-          }
-          this.question.options = options;
-          this.question.userId = this.userId;
-          this.question.schedule = this.askForm.value.schedule;
-          this.question.groupId = this.askForm.value.groupId;
-
-          console.log(this.question);
 
           this.questionservice.create(this.question)
               .subscribe(
                   data => {
-                      console.log(data);
+                      const result: Question = <Question> data;
                       this.alertservice.success('Question successfully created');
-                      //this.router.navigate(['question/' + data.question._id]);
+                      this.router.navigate(['question/' + result._id]);
                   },
                   error => {
                       console.log(error);
