@@ -9,6 +9,7 @@ import {QuestionComponent} from './question/question.component';
 import {GroupsComponent} from './groups/groups.component';
 import {MembersComponent} from './members/members.component';
 import {MemberComponent} from './member/member.component';
+import {FBLoginComponent} from './fblogin/fblogin.component';
 
 const appRoutes: Routes = [
     // uncomment to redirect to login

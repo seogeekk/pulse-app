@@ -35,7 +35,8 @@ import {AlertService} from './_services/alert.service';
 import { GroupsComponent } from './groups/groups.component';
 import { MembersComponent } from './members/members.component';
 import { MemberComponent } from './member/member.component';
-
+import { FBLoginComponent } from './fblogin/fblogin.component';
+import { FacebookModule } from 'ngx-facebook';
 
 @NgModule({
   declarations: [
@@ -47,13 +48,15 @@ import { MemberComponent } from './member/member.component';
     QuestionComponent,
     GroupsComponent,
     MembersComponent,
-    MemberComponent
+    MemberComponent,
+    FBLoginComponent
   ],
   imports: [
     BrowserModule, Routing, FormsModule, HttpClientModule, ChartsModule, ReactiveFormsModule,
       BrowserAnimationsModule,
       OwlDateTimeModule,
       OwlNativeDateTimeModule,
+      FacebookModule.forRoot()
   ],
   providers: [
       // {provide: APP_BASE_HREF, useValue : '/' },
@@ -66,7 +69,7 @@ import { MemberComponent } from './member/member.component';
       UserService,
       GroupService,
       AnswerService,
-      AlertService
+      AlertService,
       ],
   bootstrap: [AppComponent]
 })

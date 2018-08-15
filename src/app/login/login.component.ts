@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '../_services/authentication.service';
 import { UserService } from '../_services/user.service';
+import {AlertService} from '../_services/alert.service';
 
 @Component({
     // moduleId: module.id,
@@ -14,11 +15,14 @@ export class LoginComponent implements OnInit {
     loading = false;
     returnUrl: string;
 
+    public alertmessage: string;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private userService: UserService) { }
+        private userService: UserService,
+        private alertservice: AlertService) { }
 
     ngOnInit() {
         // reset login status
@@ -26,6 +30,8 @@ export class LoginComponent implements OnInit {
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+        this.alertservice.getMessage().subscribe(message => { this.alertmessage = message; });
     }
 
     login() {
@@ -45,13 +51,19 @@ export class LoginComponent implements OnInit {
                                 localStorage.setItem('profilename', user.firstName + ' ' + user.lastName);
                                 localStorage.setItem('firstname', user.firstName);
                                 localStorage.setItem('lastname', user.lastName);
-                            }
-                        );
+                            });
 
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
+                    console.log(error);
+                    if (error.error) {
+                        this.alertservice.error(error.error.message);
+                    } else {
+                        this.alertservice.error('Internal Error!');
+                    }
                     this.loading = false;
                 });
     }
+
 }

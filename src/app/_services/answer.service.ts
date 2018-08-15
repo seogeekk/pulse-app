@@ -16,4 +16,8 @@ export class AnswerService {
         return this.http.get<any>('/answer?time=true&questionId=' + id);
     }
 
+    getAnswers(id: string) {
+        return this.http.get<any>('/answer?questionId=' + id);
+    }
+
 }
