@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { QuestionService } from '../_services/question.service';
 
 import { Question } from '../_models/question';
@@ -9,6 +9,7 @@ import {GroupService} from '../_services/group.service';
 import {UserService} from '../_services/user.service';
 import {FBUser} from '../_models/fbuser';
 import {Member} from '../_models/member';
+import {AlertService} from '../_services/alert.service';
 
 @Component({
   selector: 'app-question',
@@ -21,6 +22,7 @@ export class QuestionComponent implements OnInit {
 
   public questionId;
 
+  public alertmessage = '';
   public answerdata = [];
 
   public totalresponded: number = 0;
@@ -45,7 +47,9 @@ export class QuestionComponent implements OnInit {
               private answerservice: AnswerService,
               private groupservice: GroupService,
               private userservice: UserService,
-              private route: ActivatedRoute) { }
+              private alertservice: AlertService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   async ngOnInit() {
 
@@ -98,6 +102,8 @@ export class QuestionComponent implements OnInit {
                   this.answerdata = answers;
               }
           );
+
+      this.alertservice.getMessage().subscribe(message => { this.alertmessage = message; });
 
   }
 
@@ -186,7 +192,7 @@ export class QuestionComponent implements OnInit {
       // get avg response time
       const avg = <any> await this.getResponseTime(question._id);
 
-      this.avgresponse = avg.ave/8640000;
+      this.avgresponse = avg.ave/60000;
 
   }
 
@@ -202,6 +208,38 @@ export class QuestionComponent implements OnInit {
 
   public chartHovered(e:any):void {
       console.log(e);
+  }
+
+  public deleteQuestion(): void {
+      console.log('Deleting');
+      this.questionservice.delete(this.questionId)
+          .subscribe(data => {
+              console.log(data);
+              this.alertservice.success('Question deleted!');
+              this.router.navigate(['/dashboard']);
+          },
+          error => {
+              console.log(error);
+              this.alertservice.error('Error deleting question');
+          }
+          );
+  }
+
+  public sendNow(): void {
+      console.log('Sending');
+      this.questionservice.send(this.questionId)
+          .subscribe(data => {
+              console.log(data);
+              this.alertservice.success('Question successfully sent!');
+              this.router.navigate(['/question/' + this.questionId]);
+          },
+          error => {
+              this.alertservice.error('Error sending question');
+          });
+  }
+
+  public edit(): void {
+      this.router.navigate(['/ask/edit/' + this.questionId]);
   }
 
 }

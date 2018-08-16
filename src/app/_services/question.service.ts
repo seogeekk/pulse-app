@@ -23,7 +23,11 @@ export class QuestionService {
         return this.http.put('/questions/' + question._id, question);
     }
 
-    delete(id: number) {
+    delete(id: string) {
         return this.http.delete('/questions/' + id);
+    }
+
+    send(id: string) {
+        return this.http.get('/fb/send/' + id);
     }
 }
