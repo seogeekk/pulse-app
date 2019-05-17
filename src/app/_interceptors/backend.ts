@@ -11,7 +11,7 @@ export class APIInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // change api url
         const urlReq = req.clone(
-            { url: `https://pulseapi.tk:8080${req.url}` }
+            { url: `https://pulsydemo.tk:444${req.url}` }
             );
         // set headers
         if (req.url !== '/authenticate') {
